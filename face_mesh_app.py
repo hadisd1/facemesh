@@ -45,7 +45,7 @@ app_mode = st.sidebar.selectbox(
 # Resize Images to fit Container
 @st.cache_data()
 # Get Image Dimensions
-def image_resize(image, width=None, height=None, inter=cv.INTER_AREA):
+def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
     # initialize the dimensions of the image to be resized and
     dim = None
     # grab the image size
@@ -65,7 +65,7 @@ def image_resize(image, width=None, height=None, inter=cv.INTER_AREA):
         dim = width, int(h*r)
 
     # Resize image
-    resized = cv.resize(image,dim,interpolation=inter)
+    resized = cv2.resize(image,dim,interpolation=inter)
 
     return resized
 
@@ -427,22 +427,22 @@ elif app_mode == 'Video':
 
     if not video_file_buffer:
         if use_webcam:
-            video = cv.VideoCapture(0)
+            video = cv2.VideoCapture(0)
         else:
-            video = cv.VideoCapture(DEMO_VIDEO)
+            video = cv2.VideoCapture(DEMO_VIDEO)
             temp_file.name = DEMO_VIDEO
 
     else:
         temp_file.write(video_file_buffer.read())
-        video = cv.VideoCapture(temp_file.name)
+        video = cv2.VideoCapture(temp_file.name)
 
-    width = int(video.get(cv.CAP_PROP_FRAME_WIDTH))
-    height = int(video.get(cv.CAP_PROP_FRAME_HEIGHT))
-    fps_input = int(video.get(cv.CAP_PROP_FPS))
+    width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps_input = int(video.get(cv2.CAP_PROP_FPS))
 
     ## Recording
-    codec = cv.VideoWriter_fourcc('a','v','c','1')
-    out = cv.VideoWriter('output1.mp4', codec, fps_input, (width,height))
+    codec = cv2.VideoWriter_fourcc('a','v','c','1')
+    out = cv2.VideoWriter('output1.mp4', codec, fps_input, (width,height))
 
     st.sidebar.text('Input Video')
     st.sidebar.video(temp_file.name)
@@ -608,7 +608,7 @@ elif app_mode == 'Video':
                 kpil3_text.write(f"<h1 style='text-align: center; color:red;'>{width*height}</h1>",
                                  unsafe_allow_html=True)
 
-                frame = cv.resize(frame,(0,0), fx=0.8, fy=0.8)
+                frame = cv2.resize(frame,(0,0), fx=0.8, fy=0.8)
                 frame = image_resize(image=frame, width=640)
                 stframe.image(frame,channels='BGR', use_column_width=True)
 
